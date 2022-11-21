@@ -101,6 +101,7 @@ public partial class TestContext : DbContext
                 .ToView("vw_StockProducto");
 
             entity.Property(e => e.Cantidad).HasColumnName("cantidad");
+            entity.Property(e => e.Deleted).HasColumnName("deleted");
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(150)
                 .IsUnicode(false)

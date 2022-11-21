@@ -47,7 +47,8 @@ namespace Api.Controllers
                         IdStock = producto.IdStock,
                         IdTipoProducto = producto.IdTipoProducto,
                         precioTotal = producto.Cantidad * (int)producto.Precio,
-                        status = _status != null ?  _status : "Suficiente"
+                        status = _status != null ?  _status : "Suficiente",
+                        Deleted = producto.Deleted 
                     };
 
                     parseReporte.Add(reporte);

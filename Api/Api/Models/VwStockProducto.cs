@@ -18,4 +18,6 @@ public partial class VwStockProducto
     public string? Descripcion { get; set; }
 
     public int IdTipoProducto { get; set; }
+
+    public bool? Deleted { get; set; }
 }
