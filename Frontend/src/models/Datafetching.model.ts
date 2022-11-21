@@ -15,4 +15,8 @@ export interface Success<T> {
   value: T;
 }
 
+export interface Message {
+  message: string;
+}
+
 export type Result<T> = Success<T> | Alert | Err;

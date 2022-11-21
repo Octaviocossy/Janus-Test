@@ -10,7 +10,7 @@ const Footer = () => {
         fontWeight={'bold'}
         textAlign={'center'}
       >
-        Octavio Cossy Torquati - Janus Challenge
+        Octavio Cossy Torquati - Janus Test
       </Text>
     </Box>
   );

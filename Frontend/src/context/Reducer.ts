@@ -9,6 +9,35 @@ const Reducer = (state: InitialState, action: Actions) => {
         ...state,
         reportes: action.payload,
       };
+    case 'editProducto':
+      return {
+        ...state,
+        reportes: [
+          ...state.reportes.map((reporte) => {
+            if (reporte.id === action.payload.producto.id) {
+              reporte.nombre = action.payload.producto.nombre;
+              reporte.precio = action.payload.producto.precio;
+              reporte.cantidad = action.payload.stock.cantidad;
+              reporte.idTipoProducto = action.payload.producto.idTipoProducto;
+            }
+
+            return reporte;
+          }),
+        ],
+      };
+    case 'deleteProducto':
+      return {
+        ...state,
+        reportes: [
+          ...state.reportes.map((reporte) => {
+            if (reporte.id === action.payload.producto.id) {
+              reporte.deleted = true;
+            }
+
+            return reporte;
+          }),
+        ],
+      };
     case 'message':
       return {
         ...state,

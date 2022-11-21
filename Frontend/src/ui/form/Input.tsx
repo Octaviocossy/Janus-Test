@@ -21,12 +21,7 @@ const Input: React.FC<Props> = ({ msg, error, label, name, ...rest }) => {
         return (
           <FormControl isInvalid={error}>
             <FormLabel htmlFor={name}>{label}</FormLabel>
-            <ChakraInput
-              focusBorderColor="purple.400"
-              id={name}
-              {...rest}
-              {...field}
-            />
+            <ChakraInput autoComplete={'off'} id={name} {...rest} {...field} />
             <FormErrorMessage>{msg}</FormErrorMessage>
           </FormControl>
         );

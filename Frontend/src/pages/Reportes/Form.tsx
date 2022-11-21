@@ -1,8 +1,13 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form as FormikForm } from 'formik';
+import { Box, Text, VStack } from '@chakra-ui/react';
+import { FiEdit2, FiPlus } from 'react-icons/fi';
 import * as Yup from 'yup';
+import { useEffect, useMemo } from 'react';
 
-import { Input } from '../../ui';
+import { Button, IconButton, Input, Select } from '../../ui';
+import useProvider from '../../hooks/useProvider';
+import { ProductoReq, Routes } from '../../models';
 
 const validationSchema = Yup.object({
   idTipoProducto: Yup.number().required('Campo requerido.'),
@@ -17,33 +22,130 @@ const validationSchema = Yup.object({
     .typeError('Solo se aceptan valores numéricos.'),
 });
 
-const Form = () => {
+const Form: React.FC<{}> = () => {
+  const { state, actions } = useProvider();
   const { idReporte } = useParams();
+  const navigate = useNavigate();
 
-  const initialState = {
-    idTipoProducto: 0,
-    nombre: '',
-    precio: 0,
-    cantidad: 0,
-  };
+  const reporte = useMemo(() => {
+    if (idReporte) {
+      return state.reportes.filter(
+        (reporte) => reporte.id === Number(idReporte)
+      )[0];
+    }
+  }, [idReporte]);
+
+  useEffect(() => {
+    if (!reporte && idReporte) navigate(`${Routes.REPORTES}`);
+  }, []);
 
   return (
-    <Formik
-      initialValues={initialState}
-      validationSchema={validationSchema}
-      onSubmit={(values) => console.log(values)}
-    >
-      {({ errors, touched }) => (
-        <FormikForm>
-          <Input
-            error={(errors['nombre'] && touched['nombre']) as boolean}
-            label={'Nombre'}
-            msg={errors['nombre'] as string}
-            name={'nombre'}
-          />
-        </FormikForm>
-      )}
-    </Formik>
+    <Box color={'textAndIcons'} m={'auto'} maxW={'md'}>
+      <Text
+        fontSize={'4xl'}
+        fontWeight={'bold'}
+        my={'3rem'}
+        textAlign={'center'}
+      >
+        {idReporte ? 'Editar' : 'Crear'} Producto
+      </Text>
+      <Formik
+        initialValues={{
+          idTipoProducto: reporte ? reporte.idTipoProducto : '',
+          nombre: reporte ? reporte.nombre : '',
+          precio: reporte ? reporte.precio : '',
+          cantidad: reporte ? reporte.cantidad : '',
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values) => {
+          const producto: ProductoReq = {
+            producto: {
+              idTipoProducto: Number(values.idTipoProducto),
+              precio: Number(values.precio),
+              nombre: values.nombre,
+            },
+            stock: {
+              cantidad: Number(values.cantidad),
+            },
+          };
+
+          if (idReporte) {
+            producto.producto.id = reporte?.id;
+            producto.stock.id = reporte?.idStock;
+          }
+
+          if (!idReporte) {
+            actions.createProducto(producto);
+          } else {
+            actions.editProducto(producto);
+          }
+
+          navigate(`${Routes.REPORTES}`);
+        }}
+      >
+        {({ errors, touched, values }) => (
+          <FormikForm>
+            <VStack spacing={6}>
+              <Box w={'100%'}>
+                <Box display={'flex'}>
+                  <Select
+                    error={
+                      (errors['idTipoProducto'] &&
+                        touched['idTipoProducto']) as boolean
+                    }
+                    label={'Tipo de Producto'}
+                    name={'idTipoProducto'}
+                    options={[{ id: 2, name: 'Informática' }]}
+                  />
+                  <IconButton
+                    alignSelf={'end'}
+                    aria-label="edit-tipoproducto"
+                    icon={<FiEdit2 />}
+                    ml={'1rem'}
+                    onClick={() => console.log(Number(values.idTipoProducto))}
+                  />
+                  <IconButton
+                    alignSelf={'end'}
+                    aria-label="edit-tipoproducto"
+                    icon={<FiPlus />}
+                    ml={'1rem'}
+                    onClick={() => console.log('abriendo modal...')}
+                  />
+                </Box>
+                {errors['idTipoProducto'] && (
+                  <Text color={'red.500'} fontSize={'sm'} mt={'0.3rem'}>
+                    {errors['idTipoProducto']}
+                  </Text>
+                )}
+              </Box>
+              <Input
+                error={(errors['nombre'] && touched['nombre']) as boolean}
+                label={'Nombre'}
+                msg={errors['nombre'] as string}
+                name={'nombre'}
+              />
+              <Input
+                error={(errors['precio'] && touched['precio']) as boolean}
+                label={'Precio'}
+                msg={errors['precio'] as string}
+                name={'precio'}
+              />
+              <Input
+                error={(errors['cantidad'] && touched['cantidad']) as boolean}
+                label={'Stock'}
+                msg={errors['cantidad'] as string}
+                name={'cantidad'}
+              />
+              <Button
+                text={idReporte ? 'Editar' : 'Crear'}
+                type={'submit'}
+                w={'100%'}
+              />
+            </VStack>
+          </FormikForm>
+        )}
+      </Formik>
+    </Box>
   );
 };
 

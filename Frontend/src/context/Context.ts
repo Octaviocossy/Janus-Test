@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { Reporte } from '../models';
+import { DeleteProductoReq, ProductoReq, Reporte } from '../models';
 
 interface State {
   reportes: Reporte[];
@@ -8,6 +8,9 @@ interface State {
 
 interface Actions {
   getReportes: () => void;
+  createProducto: (producto: ProductoReq) => void;
+  editProducto: (producto: ProductoReq) => void;
+  deleteProducto: (producto: DeleteProductoReq) => void;
 }
 
 interface Props {

@@ -8,4 +8,5 @@ export interface Reporte {
   status: string;
   idTipoProducto: number;
   idStock: number;
+  deleted: boolean;
 }

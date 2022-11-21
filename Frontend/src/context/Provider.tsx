@@ -1,6 +1,12 @@
 import { useReducer } from 'react';
 
-import { InitialState, Reporte } from '../models';
+import {
+  DeleteProductoReq,
+  InitialState,
+  Message,
+  ProductoReq,
+  Reporte,
+} from '../models';
 import { api } from '../services';
 
 import Context from './Context';
@@ -33,8 +39,81 @@ const Provider: React.FC<Props> = ({ children }) => {
     });
   };
 
+  const createProducto = async (producto: ProductoReq) => {
+    const { type, value } = await api.post<Message, ProductoReq>(
+      'Producto/CreateProducto',
+      producto
+    );
+
+    if (type === 'success') {
+      dispatch({
+        type: 'message',
+        payload: { message: value.message, color: 'green' },
+      });
+
+      return;
+    }
+
+    dispatch({
+      type: 'message',
+      payload: { message: 'Error general.', color: 'red' },
+    });
+  };
+
+  const editProducto = async (producto: ProductoReq) => {
+    const { type, value } = await api.put<Message, ProductoReq>(
+      'Producto/EditProducto',
+      producto
+    );
+
+    if (type === 'success') {
+      dispatch({
+        type: 'editProducto',
+        payload: producto,
+      });
+
+      dispatch({
+        type: 'message',
+        payload: { message: value.message, color: 'green' },
+      });
+
+      return;
+    }
+
+    dispatch({
+      type: 'message',
+      payload: { message: 'Error general.', color: 'red' },
+    });
+  };
+
+  const deleteProducto = async (producto: DeleteProductoReq) => {
+    const { type, value } = await api.delete<Message, DeleteProductoReq>(
+      'Producto/DeleteProducto',
+      producto
+    );
+
+    if (type === 'success') {
+      dispatch({
+        type: 'deleteProducto',
+        payload: producto,
+      });
+
+      dispatch({
+        type: 'message',
+        payload: { message: value.message, color: 'green' },
+      });
+
+      return;
+    }
+
+    dispatch({
+      type: 'message',
+      payload: { message: 'Error general.', color: 'red' },
+    });
+  };
+
   const state = { reportes: providerState.reportes };
-  const actions = { getReportes };
+  const actions = { getReportes, createProducto, editProducto, deleteProducto };
 
   return (
     <Context.Provider value={{ state, actions }}>{children}</Context.Provider>
