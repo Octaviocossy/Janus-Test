@@ -45,7 +45,7 @@ namespace Api.Controllers
                         Cantidad = producto.Cantidad,
                         Descripcion = producto.Descripcion,
                         IdStock = producto.IdStock,
-                        IdTipoprod = producto.IdTipoprod,
+                        IdTipoProducto = producto.IdTipoProducto,
                         precioTotal = producto.Cantidad * (int)producto.Precio,
                         status = _status != null ?  _status : "Suficiente"
                     };

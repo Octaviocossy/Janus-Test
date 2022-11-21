@@ -7,7 +7,7 @@ public partial class VwStockProducto
 {
     public int Id { get; set; }
 
-    public string Nombre { get; set; } = null!;
+    public string? Nombre { get; set; }
 
     public double Precio { get; set; }
 
@@ -15,7 +15,7 @@ public partial class VwStockProducto
 
     public int Cantidad { get; set; }
 
-    public string Descripcion { get; set; } = null!;
+    public string? Descripcion { get; set; }
 
-    public int IdTipoprod { get; set; }
+    public int IdTipoProducto { get; set; }
 }

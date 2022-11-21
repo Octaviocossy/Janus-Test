@@ -107,7 +107,7 @@ public partial class TestContext : DbContext
                 .HasColumnName("descripcion");
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdStock).HasColumnName("id_stock");
-            entity.Property(e => e.IdTipoprod).HasColumnName("id_tipoprod");
+            entity.Property(e => e.IdTipoProducto).HasColumnName("id_tipo_producto");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(40)
                 .IsUnicode(false)
