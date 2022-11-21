@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes as RRoutes } from 'react-router-dom';
 
 import { Layout } from './ui';
 import { Routes } from './models';
-import { Home, Reportes } from './pages';
+import { Home, Reportes, Form } from './pages';
 
 const App = () => {
   return (
@@ -11,9 +11,9 @@ const App = () => {
         <Route element={<Layout />}>
           <Route element={<Home />} path={Routes.HOME} />
           <Route element={<Reportes />} path={Routes.REPORTES} />
-          <Route element={<p>Create</p>} path={`${Routes.REPORTES}/create`} />
+          <Route element={<Form />} path={`${Routes.REPORTES}/create`} />
           <Route
-            element={<p>Edit</p>}
+            element={<Form />}
             path={`${Routes.REPORTES}/edit/:idReporte`}
           />
         </Route>

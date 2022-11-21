@@ -3,10 +3,10 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import useProvider from '../hooks/useProvider';
-import useTable from '../hooks/useTable';
-import { Reporte, Routes } from '../models';
-import { Button } from '../ui';
+import useProvider from '../../hooks/useProvider';
+import useTable from '../../hooks/useTable';
+import { Reporte, Routes } from '../../models';
+import { Button } from '../../ui';
 
 const Reportes = () => {
   const { actions, state } = useProvider();

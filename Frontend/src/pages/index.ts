@@ -1,2 +1,2 @@
 export { default as Home } from './Home';
-export { default as Reportes } from './Reportes';
+export * from './Reportes';

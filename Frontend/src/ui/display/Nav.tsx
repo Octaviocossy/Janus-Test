@@ -33,7 +33,7 @@ const Nav = () => {
         p={'1rem'}
       >
         <Text flex={1} fontSize={'3xl'} fontWeight={'bold'}>
-          Janus Challenge
+          Janus Test
         </Text>
         <HStack display={{ base: 'none', sm: 'flex' }} spacing={'5'}>
           {MenuItems.map((item, i) => (

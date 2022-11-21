@@ -6,6 +6,6 @@ export interface Reporte {
   descripcion: string;
   precioTotal: number;
   status: string;
-  idTipoprod: number;
+  idTipoProducto: number;
   idStock: number;
 }
