@@ -6,4 +6,5 @@ export type Actions =
   | { type: 'editProducto'; payload: ProductoReq }
   | { type: 'deleteProducto'; payload: DeleteProductoReq }
   | { type: 'message'; payload: AlertMsg }
+  | { type: 'spinnerOn' }
   | { type: 'resetMessage' };

@@ -68,7 +68,7 @@ function useTable<T>(data: T[], columns: ColumnDef<T>[]) {
           />
           <span className="flex items-center gap-1">
             <strong>
-              {table.getState().pagination.pageIndex + 1} of{' '}
+              {table.getState().pagination.pageIndex + 1} de{' '}
               {table.getPageCount()}
             </strong>
           </span>

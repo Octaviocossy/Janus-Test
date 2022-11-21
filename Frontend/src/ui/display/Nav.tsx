@@ -10,8 +10,11 @@ import {
 } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
+import { useEffect } from 'react';
 
 import { Link } from '../actions';
+import { Routes } from '../../models';
+import useProvider from '../../hooks/useProvider';
 
 const MenuItems = [
   { name: 'Home', url: '/' },
@@ -19,8 +22,14 @@ const MenuItems = [
 ];
 
 const Nav = () => {
+  const { actions, state } = useProvider();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== Routes.REPORTES && !state.spinner)
+      actions.spinnerOn();
+  }, [location.pathname]);
 
   return (
     <Box borderBottom={'1px'} borderColor={'borderColor'}>

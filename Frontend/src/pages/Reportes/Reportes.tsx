@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from '@chakra-ui/react';
+import { Box, HStack, Spinner, Text } from '@chakra-ui/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +24,7 @@ const Reportes = () => {
 
     setTimeout(() => {
       actions.getReportes();
-    }, 200);
+    }, 300);
   }, []);
 
   const { columns, data } = useMemo(() => {
@@ -116,7 +116,16 @@ const Reportes = () => {
 
   const [Table] = useTable(data, columns);
 
-  return (
+  return state.spinner ? (
+    <Box
+      alignItems={'center'}
+      display={'flex'}
+      justifyContent={'center'}
+      minH={'85vh'}
+    >
+      <Spinner h={'2rem'} w={'2rem'} />
+    </Box>
+  ) : (
     <Box
       alignItems={'center'}
       color={'textAndIcons'}
@@ -129,7 +138,7 @@ const Reportes = () => {
         my={'3rem'}
         textAlign={'center'}
       >
-        Reporte de Stock
+        Reporte de Stock 📦
       </Text>
       <Button
         mb={'3rem'}

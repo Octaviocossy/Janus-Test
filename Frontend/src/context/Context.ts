@@ -4,6 +4,7 @@ import { DeleteProductoReq, ProductoReq, Reporte } from '../models';
 
 interface State {
   reportes: Reporte[];
+  spinner: boolean;
 }
 
 interface Actions {
@@ -11,6 +12,7 @@ interface Actions {
   createProducto: (producto: ProductoReq) => void;
   editProducto: (producto: ProductoReq) => void;
   deleteProducto: (producto: DeleteProductoReq) => void;
+  spinnerOn: () => void;
 }
 
 interface Props {

@@ -19,16 +19,21 @@ interface Props {
 const initialState: InitialState = {
   reportes: [],
   alert: null,
+  spinner: true,
 };
 
 const Provider: React.FC<Props> = ({ children }) => {
   const [providerState, dispatch] = useReducer(Reducer, initialState);
 
+  const spinnerOn = () => {
+    dispatch({ type: 'spinnerOn' });
+  };
+
   const getReportes = async () => {
     const { type, value } = await api.get<Reporte[]>('Reporte/getReportes');
 
     if (type === 'success') {
-      dispatch({ type: 'getReportes', payload: value });
+      dispatch({ type: 'getReportes', payload: value.reverse() });
 
       return;
     }
@@ -112,8 +117,17 @@ const Provider: React.FC<Props> = ({ children }) => {
     });
   };
 
-  const state = { reportes: providerState.reportes };
-  const actions = { getReportes, createProducto, editProducto, deleteProducto };
+  const state = {
+    reportes: providerState.reportes,
+    spinner: providerState.spinner,
+  };
+  const actions = {
+    getReportes,
+    createProducto,
+    editProducto,
+    deleteProducto,
+    spinnerOn,
+  };
 
   return (
     <Context.Provider value={{ state, actions }}>{children}</Context.Provider>

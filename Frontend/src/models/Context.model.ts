@@ -4,4 +4,5 @@ import { Reporte } from './Reporte.model';
 export interface InitialState {
   reportes: Reporte[];
   alert: AlertMsg | null;
+  spinner: boolean;
 }

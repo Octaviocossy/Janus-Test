@@ -8,6 +8,7 @@ const Reducer = (state: InitialState, action: Actions) => {
       return {
         ...state,
         reportes: action.payload,
+        spinner: false,
       };
     case 'editProducto':
       return {
@@ -37,6 +38,12 @@ const Reducer = (state: InitialState, action: Actions) => {
             return reporte;
           }),
         ],
+      };
+
+    case 'spinnerOn':
+      return {
+        ...state,
+        spinner: true,
       };
     case 'message':
       return {
