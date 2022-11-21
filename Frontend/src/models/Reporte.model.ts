@@ -1,3 +1,10 @@
+export enum StatusColor {
+  Suficiente = 'green',
+  Faltante = 'yellow',
+  'Sin Stock' = 'red',
+}
+
+export type StatusColorType = keyof typeof StatusColor;
 export interface Reporte {
   id: number;
   nombre: string;
@@ -5,7 +12,7 @@ export interface Reporte {
   cantidad: number;
   descripcion: string;
   precioTotal: number;
-  status: string;
+  status: StatusColorType;
   idTipoProducto: number;
   idStock: number;
   deleted: boolean;

@@ -1,11 +1,12 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, HStack, Text } from '@chakra-ui/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GoPrimitiveDot } from 'react-icons/go';
 
 import useProvider from '../../hooks/useProvider';
 import useTable from '../../hooks/useTable';
-import { Reporte, Routes } from '../../models';
+import { Reporte, Routes, StatusColor } from '../../models';
 import { Button } from '../../ui';
 
 const Reportes = () => {
@@ -21,7 +22,9 @@ const Reportes = () => {
       return;
     }
 
-    actions.getReportes();
+    setTimeout(() => {
+      actions.getReportes();
+    }, 200);
   }, []);
 
   const { columns, data } = useMemo(() => {
@@ -45,17 +48,34 @@ const Reportes = () => {
       {
         header: 'Precio unidad',
         accessorKey: 'precio',
+        cell: (props) => <Text>${props.getValue() as string}</Text>,
       },
       {
         header: 'Precio total',
         accessorKey: 'precioTotal',
+        cell: (props) => <Text>${props.getValue() as string}</Text>,
       },
       {
         header: 'Estado',
         accessorKey: 'status',
-        cell: (props) => (
-          <Text color={'blue.600'}>{props.getValue() as string}</Text>
-        ),
+        cell: (props) => {
+          const row = props.row.original;
+
+          return (
+            <HStack
+              bg={`${StatusColor[row.status]}.100`}
+              color={`${StatusColor[row.status]}.700`}
+              fontSize={'0.9rem'}
+              fontWeight={'semibold'}
+              justifyContent={'center'}
+              p={'0.2rem 0.8rem'}
+              rounded={'2xl'}
+            >
+              <Text>{props.getValue() as string}</Text>
+              <GoPrimitiveDot />
+            </HStack>
+          );
+        },
       },
       {
         id: 'actions',
@@ -64,7 +84,7 @@ const Reportes = () => {
           const row = props.row.original;
 
           return (
-            <Box>
+            <HStack>
               <Button
                 _hover={{
                   bg: 'red.500',
@@ -82,7 +102,7 @@ const Reportes = () => {
                 text={'Editar'}
                 onClick={() => navigate(`${Routes.REPORTES}/edit/${row.id}`)}
               />
-            </Box>
+            </HStack>
           );
         },
       },
