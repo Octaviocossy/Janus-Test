@@ -10,6 +10,12 @@ const Reducer = (state: InitialState, action: Actions) => {
         reportes: action.payload,
         spinner: false,
       };
+
+    case 'getTipoProducto':
+      return {
+        ...state,
+        tipoProducto: action.payload,
+      };
     case 'editProducto':
       return {
         ...state,
@@ -48,12 +54,12 @@ const Reducer = (state: InitialState, action: Actions) => {
     case 'message':
       return {
         ...state,
-        alert: action.payload,
+        toast: action.payload,
       };
     case 'resetMessage':
       return {
         ...state,
-        alert: null,
+        toast: null,
       };
     default:
       return state;

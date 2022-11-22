@@ -7,15 +7,14 @@ import {
   SelectProps,
 } from '@chakra-ui/react';
 
+import { TipoProducto } from '../../models';
+
 interface Props extends SelectProps {
   label: string;
   name: string;
   error: boolean;
   msg?: string;
-  options: {
-    name: string;
-    id: number;
-  }[];
+  options: TipoProducto[];
 }
 
 const Select: React.FC<Props> = ({
@@ -35,8 +34,8 @@ const Select: React.FC<Props> = ({
             <ChakraSelect id={name} {...rest} {...field}>
               <option value={''}>----</option>
               {options.map((option) => (
-                <option key={option.name} value={option.id}>
-                  {option.name}
+                <option key={option.descripcion} value={option.id}>
+                  {option.descripcion}
                 </option>
               ))}
             </ChakraSelect>

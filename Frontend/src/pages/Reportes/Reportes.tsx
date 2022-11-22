@@ -70,6 +70,7 @@ const Reportes = () => {
               justifyContent={'center'}
               p={'0.2rem 0.8rem'}
               rounded={'2xl'}
+              shadow={'md'}
             >
               <Text>{props.getValue() as string}</Text>
               <GoPrimitiveDot />

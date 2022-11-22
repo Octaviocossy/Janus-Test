@@ -1,8 +1,10 @@
-import { AlertMsg } from './Alert.model';
+import { ToastMsg } from './Toast.model';
 import { Reporte } from './Reporte.model';
+import { TipoProducto } from './TipoProducto.model';
 
 export interface InitialState {
   reportes: Reporte[];
-  alert: AlertMsg | null;
+  tipoProducto: TipoProducto[];
+  toast: ToastMsg | null;
   spinner: boolean;
 }

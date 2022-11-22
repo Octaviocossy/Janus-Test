@@ -6,6 +6,7 @@ import {
   Message,
   ProductoReq,
   Reporte,
+  TipoProducto,
 } from '../models';
 import { api } from '../services';
 
@@ -18,8 +19,9 @@ interface Props {
 
 const initialState: InitialState = {
   reportes: [],
-  alert: null,
+  toast: null,
   spinner: true,
+  tipoProducto: [],
 };
 
 const Provider: React.FC<Props> = ({ children }) => {
@@ -40,7 +42,10 @@ const Provider: React.FC<Props> = ({ children }) => {
 
     dispatch({
       type: 'message',
-      payload: { message: 'Error general.', color: 'red' },
+      payload: {
+        title: 'Error general.',
+        status: 'error',
+      },
     });
   };
 
@@ -53,7 +58,10 @@ const Provider: React.FC<Props> = ({ children }) => {
     if (type === 'success') {
       dispatch({
         type: 'message',
-        payload: { message: value.message, color: 'green' },
+        payload: {
+          title: value.message,
+          status: 'success',
+        },
       });
 
       return;
@@ -61,7 +69,10 @@ const Provider: React.FC<Props> = ({ children }) => {
 
     dispatch({
       type: 'message',
-      payload: { message: 'Error general.', color: 'red' },
+      payload: {
+        title: 'Error general.',
+        status: 'error',
+      },
     });
   };
 
@@ -79,7 +90,10 @@ const Provider: React.FC<Props> = ({ children }) => {
 
       dispatch({
         type: 'message',
-        payload: { message: value.message, color: 'green' },
+        payload: {
+          title: value.message,
+          status: 'success',
+        },
       });
 
       return;
@@ -87,7 +101,10 @@ const Provider: React.FC<Props> = ({ children }) => {
 
     dispatch({
       type: 'message',
-      payload: { message: 'Error general.', color: 'red' },
+      payload: {
+        title: 'Error general.',
+        status: 'error',
+      },
     });
   };
 
@@ -105,7 +122,10 @@ const Provider: React.FC<Props> = ({ children }) => {
 
       dispatch({
         type: 'message',
-        payload: { message: value.message, color: 'green' },
+        payload: {
+          title: value.message,
+          status: 'success',
+        },
       });
 
       return;
@@ -113,13 +133,83 @@ const Provider: React.FC<Props> = ({ children }) => {
 
     dispatch({
       type: 'message',
-      payload: { message: 'Error general.', color: 'red' },
+      payload: {
+        title: 'Error general.',
+        status: 'error',
+      },
     });
+  };
+
+  const getTipoProducto = async () => {
+    const { type, value } = await api.get<TipoProducto[]>(
+      'TipoProducto/GetTipoProducto'
+    );
+
+    if (type === 'success') {
+      dispatch({ type: 'getTipoProducto', payload: value.reverse() });
+
+      return;
+    }
+
+    dispatch({
+      type: 'message',
+      payload: {
+        title: 'Error general.',
+        status: 'error',
+      },
+    });
+  };
+
+  const createTipoProducto = async (tipoProducto: TipoProducto) => {
+    const { type, value } = await api.post<Message, TipoProducto>(
+      'TipoProducto/CreateTipoProducto',
+      tipoProducto
+    );
+
+    if (type === 'success') {
+      dispatch({
+        type: 'message',
+        payload: {
+          title: value.message,
+          status: 'success',
+        },
+      });
+
+      getTipoProducto();
+
+      return;
+    }
+
+    if (type === 'alert') {
+      dispatch({
+        type: 'message',
+        payload: {
+          title: value.message,
+          status: 'warning',
+        },
+      });
+
+      return;
+    }
+
+    dispatch({
+      type: 'message',
+      payload: {
+        title: 'Error general.',
+        status: 'error',
+      },
+    });
+  };
+
+  const resetMessage = () => {
+    dispatch({ type: 'resetMessage' });
   };
 
   const state = {
     reportes: providerState.reportes,
     spinner: providerState.spinner,
+    tipoProducto: providerState.tipoProducto,
+    toast: providerState.toast,
   };
   const actions = {
     getReportes,
@@ -127,6 +217,9 @@ const Provider: React.FC<Props> = ({ children }) => {
     editProducto,
     deleteProducto,
     spinnerOn,
+    getTipoProducto,
+    createTipoProducto,
+    resetMessage,
   };
 
   return (

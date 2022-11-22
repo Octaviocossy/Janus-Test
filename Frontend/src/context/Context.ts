@@ -1,18 +1,29 @@
 import { createContext } from 'react';
 
-import { DeleteProductoReq, ProductoReq, Reporte } from '../models';
+import {
+  DeleteProductoReq,
+  ProductoReq,
+  Reporte,
+  TipoProducto,
+  ToastMsg,
+} from '../models';
 
 interface State {
-  reportes: Reporte[];
   spinner: boolean;
+  reportes: Reporte[];
+  toast: ToastMsg | null;
+  tipoProducto: TipoProducto[];
 }
 
 interface Actions {
-  getReportes: () => void;
-  createProducto: (producto: ProductoReq) => void;
-  editProducto: (producto: ProductoReq) => void;
-  deleteProducto: (producto: DeleteProductoReq) => void;
   spinnerOn: () => void;
+  getReportes: () => void;
+  resetMessage: () => void;
+  getTipoProducto: () => void;
+  editProducto: (producto: ProductoReq) => void;
+  createProducto: (producto: ProductoReq) => void;
+  deleteProducto: (producto: DeleteProductoReq) => void;
+  createTipoProducto: (tipoProducto: TipoProducto) => void;
 }
 
 interface Props {

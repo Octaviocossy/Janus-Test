@@ -1,13 +1,11 @@
-import { AlertMsg } from './Alert.model';
-
 export interface Err {
   type: 'error';
   value: Error;
 }
 
-export interface Alert {
+export interface Alert<T> {
   type: 'alert';
-  value: AlertMsg;
+  value: T;
 }
 
 export interface Success<T> {
@@ -19,4 +17,4 @@ export interface Message {
   message: string;
 }
 
-export type Result<T> = Success<T> | Alert | Err;
+export type Result<T> = Success<T> | Alert<T> | Err;
