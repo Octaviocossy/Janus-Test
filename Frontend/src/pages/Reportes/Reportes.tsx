@@ -3,11 +3,13 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoPrimitiveDot } from 'react-icons/go';
+import { FaRegFileExcel } from 'react-icons/fa';
 
 import useProvider from '../../hooks/useProvider';
 import useTable from '../../hooks/useTable';
 import { Reporte, Routes, StatusColor } from '../../models';
-import { Button } from '../../ui';
+import { Button, IconButton } from '../../ui';
+import { useXlsx, XlsxSchemas } from '../../hooks';
 
 const Reportes = () => {
   const { actions, state } = useProvider();
@@ -88,9 +90,10 @@ const Reportes = () => {
             <HStack>
               <Button
                 _hover={{
-                  bg: 'red.500',
+                  bg: 'red.50',
                 }}
-                bg={'red.600'}
+                bg={'red.100'}
+                color={'red.700'}
                 text={'Eliminar'}
                 onClick={() =>
                   actions.deleteProducto({
@@ -117,6 +120,8 @@ const Reportes = () => {
 
   const [Table] = useTable(data, columns);
 
+  const { Xlsx } = useXlsx(data, XlsxSchemas.Reportes);
+
   return state.spinner ? (
     <Box
       alignItems={'center'}
@@ -141,11 +146,18 @@ const Reportes = () => {
       >
         Reporte de Stock 📦
       </Text>
-      <Button
-        mb={'3rem'}
-        text={'Nuevo Producto'}
-        onClick={() => navigate(`${Routes.REPORTES}/create`)}
-      />
+      <Box mb={'3rem'}>
+        <Button
+          text={'Nuevo Producto'}
+          onClick={() => navigate(`${Routes.REPORTES}/create`)}
+        />
+        <IconButton
+          aria-label="xlsx-export"
+          icon={<FaRegFileExcel />}
+          ml={'1rem'}
+          onClick={Xlsx}
+        />
+      </Box>
       <Table />
     </Box>
   );

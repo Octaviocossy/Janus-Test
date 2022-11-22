@@ -17,8 +17,8 @@ import { Routes } from '../../models';
 import useProvider from '../../hooks/useProvider';
 
 const MenuItems = [
-  { name: 'Home', url: '/' },
-  { name: 'Reportes', url: '/reportes' },
+  { name: 'Home', url: `${Routes.HOME}` },
+  { name: 'Reportes', url: `${Routes.REPORTES}` },
 ];
 
 const Nav = () => {
