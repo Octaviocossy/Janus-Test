@@ -3,7 +3,7 @@ import { Formik, Form as FormikForm } from 'formik';
 import { Box, Text, VStack } from '@chakra-ui/react';
 import { FiPlus } from 'react-icons/fi';
 import * as Yup from 'yup';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { Button, IconButton, Input, Select } from '../../ui';
 import { ProductoReq, Routes } from '../../models';
@@ -39,7 +39,15 @@ const Form: React.FC<{}> = () => {
     }
   }, [idReporte]);
 
+  const firstLoad = useRef(true);
+
   useEffect(() => {
+    if (firstLoad.current) {
+      firstLoad.current = false;
+
+      return;
+    }
+
     if (!reporte && idReporte) navigate(`${Routes.REPORTES}`);
     actions.getTipoProducto();
   }, []);
