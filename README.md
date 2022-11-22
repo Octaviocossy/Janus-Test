@@ -26,7 +26,15 @@
 Instalar dependencias con `npm i` dentro de la carpeta Frontend, luego utilizar `npm run dev` para levantar el proyecto.
 
 ### Backend
-Basta con cambiar el string de conexión (appsettings) y luego iniciar la app mediante Visual Studio 
+Basta con cambiar el string de conexión en appsettings y TestContext luego iniciar la app mediante Visual Studio 
+- appsettings
 
 ![](https://i.imgur.com/lgqKk3T.png)
+
+- TestContext
+
+![](https://i.imgur.com/txPxlt3.png)
+
+- Iniciar Api
+
 ![](https://i.imgur.com/QALwSaX.png)
